@@ -7,11 +7,18 @@ import (
 
 type User struct {
 	gorm.Model
-	ID           int    `gorm:"primaryKey"`
-	Name         string `json:"name" binding:"required"`
-	Email        string `json:"email" binding:"required" gorm:"unique"`
-	PasswordHash string `gorm:"column:password_hash"`
-	Password     string `json:"password" binding:"required" gorm:"-"`
+	ID           int       `gorm:"primaryKey"`
+	Name         string    `json:"name" binding:"required"`
+	Email        string    `json:"email" binding:"required" gorm:"unique"`
+	PasswordHash string    `gorm:"column:password_hash"`
+	Password     string    `json:"password" binding:"required" gorm:"-"`
+	Products     []Product `gorm:"foreignKey:UserID"`
+	Clients      []Client  `gorm:"foreignKey:UserID"`
+}
+
+type LoginCredentials struct {
+	Email    string `json:"email" binding:"required"`
+	Password string `json:"password" binding:"required"`
 }
 
 func (user *User) SetPassword(password string) error {

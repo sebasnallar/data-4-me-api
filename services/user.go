@@ -21,3 +21,12 @@ func GetUsers() ([]models.User, error) {
 	result := db.GlobalDB.Find(&users)
 	return users, result.Error
 }
+
+func GetUserByEmail(email string) (*models.User, error) {
+	var user models.User
+	result := db.GlobalDB.Where("email = ?", email).First(&user)
+	if result.Error != nil {
+		return nil, result.Error
+	}
+	return &user, nil
+}
