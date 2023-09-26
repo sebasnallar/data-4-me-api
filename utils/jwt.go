@@ -6,7 +6,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 )
 
-var jwtKey = []byte("av234adfasf3t5yafgad2313asddfx")
+var JwtKey = []byte("av234adfasf3t5yafgad2313asddfx")
 
 type Claims struct {
 	Email string `json:"email"`
@@ -14,7 +14,7 @@ type Claims struct {
 }
 
 func GenerateToken(email string) (string, error) {
-	expirationTime := time.Now().Add(24 * time.Hour)
+	expirationTime := time.Now().Add(1 * time.Minute)
 	claims := &Claims{
 		Email: email,
 		RegisteredClaims: jwt.RegisteredClaims{
@@ -23,7 +23,7 @@ func GenerateToken(email string) (string, error) {
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(jwtKey)
+	tokenString, err := token.SignedString(JwtKey)
 	if err != nil {
 		return "", err
 	}

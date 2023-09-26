@@ -19,7 +19,7 @@ func RegisterHandler(c *gin.Context) {
 
 	err := services.CreateUser(&user)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error creating user"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		return
 	}
 

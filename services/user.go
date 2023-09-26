@@ -6,6 +6,12 @@ import (
 )
 
 func CreateUser(user *models.User) error {
+	err := user.SetPassword(user.Password)
+
+	if err != nil {
+		return err
+	}
+
 	result := db.GlobalDB.Create(user)
 	return result.Error
 }
