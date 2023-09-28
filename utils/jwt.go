@@ -9,14 +9,14 @@ import (
 var JwtKey = []byte("av234adfasf3t5yafgad2313asddfx")
 
 type Claims struct {
-	Email string `json:"email"`
+	UserID uint `json:"user_id"`
 	jwt.RegisteredClaims
 }
 
-func GenerateToken(email string) (string, error) {
+func GenerateToken(userID uint) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
-		Email: email,
+		UserID: userID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},

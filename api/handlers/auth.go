@@ -23,7 +23,7 @@ func RegisterHandler(c *gin.Context) {
 		return
 	}
 
-	token, err := utils.GenerateToken(user.Email)
+	token, err := utils.GenerateToken(user.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error generating token"})
 		return
@@ -51,7 +51,7 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
-	token, err := utils.GenerateToken(user.Email)
+	token, err := utils.GenerateToken(user.ID)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error generating token"})
 		return
