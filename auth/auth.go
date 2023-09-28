@@ -10,15 +10,15 @@ import (
 
 func CurrentUser(c *gin.Context) (models.User, error) {
 	var user models.User
-	email, exists := c.Get("email")
+	userID, exists := c.Get("userID")
 	if !exists {
 		return user, gin.Error{
-			Err:  fmt.Errorf("could not retrieve email from context"),
+			Err:  fmt.Errorf("could not retrieve userID from context"),
 			Type: gin.ErrorTypePublic,
 		}
 	}
 
-	if err := db.GlobalDB.Where("email = ?", email).First(&user).Error; err != nil {
+	if err := db.GlobalDB.Where("id = ?", userID).First(&user).Error; err != nil {
 		return user, gin.Error{
 			Err:  fmt.Errorf("error fetching user: %v", err),
 			Type: gin.ErrorTypePublic,
