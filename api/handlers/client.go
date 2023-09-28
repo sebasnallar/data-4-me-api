@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"data-4-me-api/auth"
 	"data-4-me-api/models"
 	"data-4-me-api/services"
 	"net/http"
@@ -16,15 +17,35 @@ func CreateClientHandler(c *gin.Context) {
 		return
 	}
 
-	err := services.CreateClient(&client)
+	user, err := auth.CurrentUser(c)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	client.UserID = user.ID
+
+	err = services.CreateClient(&client)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"client": client})
 }
 
-func DeleteClientHandler(c *gin.Context) {
+func GetClientsHandler(c *gin.Context) {
+	user, err := auth.CurrentUser(c)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 
+	clients, err := services.GetClients(user.ID)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Error fetching clients"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"clients": clients})
 }

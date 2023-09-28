@@ -17,6 +17,7 @@ func SetupRoutes(router *gin.Engine) {
 		v1.POST("/log-in", handlers.LoginHandler)
 
 		// Client Routes
+		v1.GET("/clients", middleware.AuthRequired(), handlers.GetClientsHandler)
 		v1.POST("/create-client", middleware.AuthRequired(), handlers.CreateClientHandler)
 	}
 }
