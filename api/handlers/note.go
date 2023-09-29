@@ -34,6 +34,8 @@ func CreateNoteHandler(c *gin.Context) {
 		return
 	}
 
+	note.UserID = user.ID
+
 	err = services.CreateNote(&note)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -41,4 +43,8 @@ func CreateNoteHandler(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{"note": note})
+}
+
+func GetNotesHandler(c *gin.Context) {
+
 }

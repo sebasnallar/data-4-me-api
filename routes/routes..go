@@ -19,5 +19,9 @@ func SetupRoutes(router *gin.Engine) {
 		// Client Routes
 		v1.GET("/clients", middleware.AuthRequired(), handlers.GetClientsHandler)
 		v1.POST("/create-client", middleware.AuthRequired(), handlers.CreateClientHandler)
+
+		// Notes Routes
+		v1.GET("/notes", middleware.AuthRequired(), handlers.GetNotesHandler)
+		v1.POST("/create-note", middleware.AuthRequired(), handlers.CreateNoteHandler)
 	}
 }

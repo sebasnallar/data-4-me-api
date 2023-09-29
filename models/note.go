@@ -10,4 +10,5 @@ type Note struct {
 	Title    string `json:"title" binding:"required"`
 	Content  string `json:"content" binding:"required"`
 	ClientID uint   `json:"client_id" gorm:"not null;index"`
+	UserID   uint   `json:"user_id" gorm:"not null;index"`
 }
