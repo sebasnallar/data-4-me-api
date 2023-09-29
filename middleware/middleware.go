@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"data-4-me-api/models"
 	"data-4-me-api/utils"
 	"net/http"
 	"strings"
@@ -24,7 +25,7 @@ func AuthRequired() gin.HandlerFunc {
 		}
 
 		tokenStr := bearerToken[1]
-		claims := &utils.Claims{}
+		claims := &models.Claims{}
 
 		token, err := jwt.ParseWithClaims(tokenStr, claims, func(token *jwt.Token) (interface{}, error) {
 			return utils.JwtKey, nil

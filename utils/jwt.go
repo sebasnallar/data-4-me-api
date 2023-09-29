@@ -1,21 +1,18 @@
 package utils
 
 import (
+	"data-4-me-api/models"
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
 )
 
-var JwtKey = []byte("av234adfasf3t5yafgad2313asddfx")
-
-type Claims struct {
-	UserID uint `json:"user_id"`
-	jwt.RegisteredClaims
-}
+var JwtKey = []byte(os.Getenv("JWT_KEY"))
 
 func GenerateToken(userID uint) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
-	claims := &Claims{
+	claims := &models.Claims{
 		UserID: userID,
 		RegisteredClaims: jwt.RegisteredClaims{
 			ExpiresAt: jwt.NewNumericDate(expirationTime),

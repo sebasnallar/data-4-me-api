@@ -17,3 +17,20 @@ func GetClients(userID uint) ([]models.Client, error) {
 	}
 	return clients, nil
 }
+
+func GetclientById(clientID uint) (*models.Client, error) {
+	client := &models.Client{}
+	if err := db.GlobalDB.First(client, clientID).Error; err != nil {
+		return nil, err
+	}
+	return client, nil
+}
+
+func VerifyClientBelongsToUser(clientID, userID uint) (bool, error) {
+	var client models.Client
+	err := db.GlobalDB.First(&client, clientID).Error
+	if err != nil {
+		return false, err
+	}
+	return client.UserID == userID, nil
+}
